@@ -1,0 +1,754 @@
+/* Styles de base */
+.results-page {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.header-title h2 {
+  color: #fff;
+  font-size: 1.8rem;
+  margin: 0 0 5px 0;
+  text-align: left;
+}
+
+.subtitle {
+  color: #aaa;
+  margin: 0;
+}
+
+.tournament-filter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tournament-filter label {
+  color: #fff;
+}
+
+.tournament-filter select {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #1e1e1e;
+  color: white;
+  border: 1px solid #333;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  min-width: 200px;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  border-bottom: 2px solid #333;
+  margin-bottom: 20px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: #444 #1e1e1e;
+}
+
+.tabs::-webkit-scrollbar {
+  height: 6px;
+}
+
+.tabs::-webkit-scrollbar-track {
+  background: #1e1e1e;
+}
+
+.tabs::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 3px;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: #aaa;
+  padding: 12px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.tab-btn.active {
+  color: #ef854d;
+}
+
+.tab-btn.active::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #ef854d;
+}
+
+.tab-content {
+  flex: 1;
+}
+
+/* Filters */
+.filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #1e1e1e;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.search {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.search input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #333;
+  background-color: #121212;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px; /* Évite le zoom sur iOS */
+}
+
+.filter-group {
+  display: flex;
+  gap: 10px;
+}
+
+.filter-group select {
+  box-sizing: border-box;
+  padding: 10px 15px;
+  border: 1px solid #333;
+  background-color: #121212;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px; /* Évite le zoom sur iOS */
+}
+
+/* Tables */
+.matches-table-container,
+.standings-container {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 650px;
+}
+
+th,
+td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+th {
+  background-color: #121212;
+  color: #aaa;
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  position: sticky;
+  top: 0;
+  z-index: 1; /* Assure que les en-têtes sont au-dessus des cellules */
+}
+
+td {
+  color: white;
+  border-bottom: 1px solid #333;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.team-col {
+  min-width: 160px;
+}
+
+.team-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.team-players {
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+.score-col {
+  text-align: center;
+  min-width: 90px;
+}
+
+.score {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.score .winner {
+  color: #ef854d;
+}
+
+.score-entry {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+
+.score-input {
+  width: 40px;
+  text-align: center;
+  padding: 5px;
+  border: 1px solid #333;
+  border-radius: 4px;
+  background-color: #2a2a2a;
+  color: white;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.status-badge.completed {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+}
+
+.status-badge.scheduled {
+  background-color: rgba(33, 150, 243, 0.2);
+  color: #2196f3;
+}
+
+.status-badge.in_progress {
+  background-color: rgba(239, 133, 77, 0.2);
+  color: #ef854d;
+}
+
+.status-badge.cancelled {
+  background-color: rgba(244, 67, 54, 0.2);
+  color: #f44336;
+}
+
+.actions {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.action-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.action-btn.edit {
+  background-color: rgba(33, 150, 243, 0.2);
+  color: #2196f3;
+}
+
+.action-btn.edit:hover {
+  background-color: rgba(33, 150, 243, 0.5);
+}
+
+.action-btn.save {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+}
+
+.action-btn.save:hover {
+  background-color: rgba(76, 175, 80, 0.5);
+}
+
+.action-btn.view {
+  background-color: rgba(158, 158, 158, 0.2);
+  color: #9e9e9e;
+}
+
+.action-btn.view:hover {
+  background-color: rgba(158, 158, 158, 0.5);
+}
+
+.no-data {
+  text-align: center;
+  color: #aaa;
+  font-style: italic;
+  padding: 30px;
+}
+
+/* Standings Tab */
+.no-tournament-message {
+  text-align: center;
+  padding: 40px;
+  color: #aaa;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+}
+
+.tournament-name {
+  padding: 15px;
+  margin: 0;
+  background-color: #2a2a2a;
+  color: #ef854d;
+  font-size: 1.3rem;
+}
+
+.standings-table .position {
+  text-align: center;
+  font-weight: bold;
+}
+
+.standings-table .team-name {
+  min-width: 180px;
+}
+
+.standings-table .points {
+  font-weight: bold;
+  color: #ef854d;
+}
+
+.positive {
+  color: #4caf50;
+}
+
+.negative {
+  color: #f44336;
+}
+
+.top-three {
+  background-color: rgba(239, 133, 77, 0.05);
+}
+
+.top-three:hover {
+  background-color: rgba(239, 133, 77, 0.1);
+}
+
+.legend {
+  padding: 15px;
+  color: #aaa;
+  font-size: 0.85rem;
+  text-align: center;
+  border-top: 1px solid #333;
+}
+
+/* Vue mobile des matchs */
+.matches-card-view {
+  display: none; /* Par défaut, caché sur desktop */
+}
+
+/* Styles de la vue carte sur mobile */
+.match-card-mobile {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  padding: 15px;
+}
+
+.match-card-mobile .match-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.match-card-mobile .match-date {
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+.match-card-mobile .match-teams {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.match-card-mobile .team-name {
+  font-weight: bold;
+}
+
+.match-card-mobile .home-team,
+.match-card-mobile .away-team {
+  flex: 1;
+}
+
+.match-card-mobile .home-team {
+  text-align: left;
+}
+
+.match-card-mobile .away-team {
+  text-align: right;
+}
+
+.match-card-mobile .match-score {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0 10px;
+  flex-shrink: 0;
+}
+
+.match-card-mobile .tournament-name-mobile {
+  text-align: center;
+  font-size: 0.85rem;
+  color: #aaa;
+  margin: 10px 0;
+}
+
+.match-card-mobile .match-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/* Tableau de classement compact pour mobile */
+.standings-compact {
+  display: none; /* Par défaut, caché sur desktop */
+}
+
+.standing-item {
+  background-color: #1e1e1e;
+  border-radius: 8px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.standing-item:last-child {
+  margin-bottom: 0;
+}
+
+.standing-item .position {
+  font-weight: bold;
+  font-size: 1.2rem;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.standing-item.top-three .position {
+  background-color: rgba(239, 133, 77, 0.2);
+  color: #ef854d;
+}
+
+.standing-item .team-info {
+  text-align: left;
+}
+
+.standing-item .points {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #ef854d;
+}
+
+.standing-item .details {
+  display: flex;
+  gap: 10px;
+  font-size: 0.8rem;
+  color: #aaa;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+
+/* Loading & Error states */
+.loading-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 0;
+  color: #aaa;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(239, 133, 77, 0.1);
+  border-radius: 50%;
+  border-top: 4px solid #ef854d;
+  animation: spin 1s linear infinite;
+  margin-bottom: 15px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.error-message {
+  text-align: center;
+  color: #f44336;
+  padding: 20px;
+  background-color: rgba(244, 67, 54, 0.1);
+  border-radius: 5px;
+  margin: 20px 0;
+}
+
+.retry-button {
+  background-color: #ef854d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.retry-button:hover {
+  background-color: #d67642;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1024px) {
+  .results-page {
+    padding: 0 10px;
+  }
+  
+  .header-title h2 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 992px) {
+  /* Ajustements pour tablettes */
+  .page-header {
+    flex-wrap: wrap;
+  }
+
+  .header-title {
+    margin-bottom: 15px;
+  }
+
+  th, td {
+    padding: 10px 12px;
+  }
+  
+  .team-players {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Ajustements pour petites tablettes et grands mobiles */
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-actions {
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .tournament-filter {
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .tournament-filter select {
+    flex-grow: 1;
+  }
+
+  .filters {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+
+  .search {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .filter-group {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .filter-group select {
+    flex-grow: 1;
+  }
+  
+  .legend p {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .legend p strong {
+    margin-right: 3px;
+  }
+}
+
+@media (max-width: 576px) {
+  /* Ajustements pour mobiles */
+  .results-page {
+    gap: 15px;
+  }
+
+  .header-title h2 {
+    font-size: 1.4rem;
+  }
+
+  .tournament-filter label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .tournament-filter {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tab-btn {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+
+  /* Basculer vers la vue carte sur mobile */
+  .matches-table-container {
+    display: none; /* Cacher la vue tableau */
+  }
+
+  .matches-card-view {
+    display: block; /* Afficher la vue carte */
+  }
+  
+  /* Basculer vers la vue compacte des classements sur mobile */
+  .standings-container table {
+    display: none; /* Cacher le tableau */
+  }
+  
+  .standings-compact {
+    display: flex; /* Afficher la vue compacte */
+    flex-direction: column;
+  }
+  
+  /* Réduire l'espacement */
+  .standings-container {
+    padding-bottom: 15px;
+  }
+  
+  /* Assurer que les input ne soient pas trop petits sur mobile */
+  .score-input {
+    width: 35px;
+    height: 30px;
+    font-size: 16px;
+  }
+  
+  /* Améliorer les cibles tactiles */
+  .action-btn {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+    margin: 0 5px;
+  }
+  
+  .standing-item .details {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 360px) {
+  /* Pour les écrans très petits */
+  .results-page {
+    padding: 0 8px;
+  }
+  
+  .header-title h2 {
+    font-size: 1.2rem;
+  }
+  
+  .tab-btn {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+  
+  .match-card-mobile {
+    padding: 10px;
+  }
+  
+  .match-card-mobile .match-score {
+    font-size: 1.1rem;
+  }
+  
+  .standing-item {
+    padding: 8px;
+  }
+  
+  .standing-item .details {
+    font-size: 0.7rem;
+    gap: 6px;
+  }
+}
+
+/* Amélioration de l'accessibilité */
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+
+  .tab-btn,
+  .action-btn {
+    transition: none;
+  }
+}

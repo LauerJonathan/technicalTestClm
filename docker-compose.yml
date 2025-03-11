@@ -1,0 +1,56 @@
+services:
+  api:
+    build: ./server
+    container_name: babyfoot-api
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    depends_on:
+      - db
+    environment:
+      - PORT=5001
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=root_password
+      - DB_NAME=babyfoot_tournament
+      - JWT_SECRET=af1bf87c72b30a8bc784b3058f98011a7fc9d52ec798b87a
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    networks:
+      - babyfoot-network
+
+  frontend:
+    build: ./client
+    container_name: babyfoot-frontend
+    restart: unless-stopped
+    ports:
+      - "8080:5173"
+    depends_on:
+      - api
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    networks:
+      - babyfoot-network
+
+  db:
+    image: mysql:8.0
+    container_name: babyfoot-db
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_password
+      - MYSQL_DATABASE=babyfoot_tournament
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - babyfoot-network
+
+networks:
+  babyfoot-network:
+    driver: bridge
+
+volumes:
+  db-data:
