@@ -18,7 +18,7 @@ RUN npm install
 COPY . .
 
 # Pour le développement, nous exposerons le serveur de développement Vite
-EXPOSE 8080
+EXPOSE 3000
 
 # Commande par défaut pour le développement
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0", "--port", "3000"]

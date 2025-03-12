@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 5000;
 
 // Sécuriser l'application
 const corsOptions = {
-  origin: "http://localhost:8080",
+  origin: "http://localhost:3000>",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true, // Pour permettre l'envoi de cookies si nécessaire
