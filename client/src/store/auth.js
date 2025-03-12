@@ -1,4 +1,3 @@
-// src/store/auth.js
 import { reactive, readonly } from "vue";
 import apiClient from "../plugins/axiosConfig";
 
@@ -11,7 +10,6 @@ const state = reactive({
   error: null,
 });
 
-// Méthodes
 const methods = {
   async login(username, password) {
     state.isLoading = true;
@@ -27,7 +25,7 @@ const methods = {
       state.token = response.data.token;
       state.isAuthenticated = true;
 
-      // Stockage dans localStorage
+      // Stockage dans localStorage (httpOnly en prod)
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.admin));
 

@@ -53,7 +53,7 @@ Démarrez l'application avec Docker : Exécutez cette commande pour démarrer le
 docker-compose up --build
 ```
 
-L'application sera accessible sur http://localhost:8080.
+L'application sera accessible sur http://localhost:3000.
 
 ### Connexion en tant qu'administrateur
 
@@ -82,7 +82,8 @@ Le projet utilise plusieurs seeders pour initialiser différents types de donné
 
 ### Comment sont exécutés les Seeders
 
-Les seeders sont exécutés automatiquement au démarrage de l'application lorsque l'environnement est configuré en mode "demo". Dans Docker, cela est configuré via la variable d'environnement `NODE_ENV=development`.
+Les seeders sont exécutés automatiquement au démarrage de l'application lorsque l'environnement est configuré en mode "demo". 
+Cela est configuré via la variable d'environnement `NODE_ENV=development` (fichier server/.env).
 
 ### Structure des Données de Démonstration
 

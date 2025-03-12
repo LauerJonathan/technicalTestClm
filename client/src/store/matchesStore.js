@@ -8,7 +8,6 @@ const state = reactive({
   error: null,
 });
 
-// Méthodes
 const methods = {
   async fetchAllMatches() {
     state.isLoading = true;

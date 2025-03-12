@@ -5,7 +5,7 @@ import Results from "../views/admin/Results.vue";
 import Registration from "../views/Registration.vue";
 import AdminLogin from "../views/AdminLogin.vue";
 import AdminLayout from "../views/admin/adminLayout.vue";
-import authStore from "../store/auth"; // Import du service d'authentification
+import authStore from "../store/auth";
 
 const routes = [
   // Routes publiques

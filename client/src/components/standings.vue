@@ -8,12 +8,10 @@ const error = ref(null);
 
 // Fonction pour formater les noms des joueurs
 const formatName = (fullName) => {
-  // Vérifie si le nom est valide
   if (!fullName || typeof fullName !== "string") {
     return "";
   }
-
-  // Nettoyage et division du nom
+  
   const parts = fullName.trim().split(" ");
 
   // Si le nom ne contient pas d'espace, le retourner tel quel
@@ -21,15 +19,13 @@ const formatName = (fullName) => {
     return parts[0];
   }
 
-  // Récupérer le prénom et l'initiale du nom
   const firstName = parts[0];
   const lastInitial = parts[1].charAt(0).toUpperCase();
-
-  // Retourner le format désiré
+  
   return `${firstName}.${lastInitial}`;
 };
 
-// Fonction pour calculer la différence de buts
+// Calculer la différence de buts
 const calculBd = (a, b) => {
   return a - b;
 };

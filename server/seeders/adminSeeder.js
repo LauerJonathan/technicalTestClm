@@ -8,7 +8,6 @@ const createDefaultAdmin = async () => {
     const adminCount = await Admin.count();
     
     if (adminCount === 0) {
-      // Générer un mot de passe aléatoire fort pour l'environnement de production
       let adminPassword = "Admin123!"; // Mot de passe par défaut pour le développement
       
       // En production, générer un mot de passe aléatoire => A MODIFIER PAR L'UTILISATEUR A LA 1 CO

@@ -2,7 +2,6 @@
 import { ref, onMounted } from "vue";
 import standingsStore from "../store/standingsStore";
 
-// État pour stocker les données du podium
 const podiumTeams = ref([]);
 const isLoading = ref(false);
 const error = ref(null);
@@ -15,7 +14,6 @@ const loadPodiumData = async () => {
 
   try {
     const podiumData = await standingsStore.fetchPodium();
-    // S'assurer que nous avons les données dans le bon ordre (1er, 2e, 3e)
     podiumTeams.value = podiumData || [];
   } catch (err) {
     console.error("Erreur lors du chargement du podium:", err);
@@ -47,7 +45,6 @@ const formatPlayerNames = (team) => {
   return `${formatName(player1Name)} & ${formatName(player2Name)}`;
 };
 
-// Charger les données au montage du composant
 onMounted(() => {
   loadPodiumData();
 });

@@ -26,7 +26,7 @@ const createDemoTournamentTeams = async () => {
         // Nombre d'équipes à inscrire pour ce tournoi (entre 4 et 8)
         const numTeams =
           tournament.status === "draft"
-            ? 4
+            ? 0
             : tournament.status === "open"
             ? 6
             : 8;

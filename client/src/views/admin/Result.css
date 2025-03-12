@@ -740,15 +740,3 @@ tbody tr:hover {
     gap: 6px;
   }
 }
-
-/* Amélioration de l'accessibilité */
-@media (prefers-reduced-motion: reduce) {
-  .spinner {
-    animation: none;
-  }
-
-  .tab-btn,
-  .action-btn {
-    transition: none;
-  }
-}

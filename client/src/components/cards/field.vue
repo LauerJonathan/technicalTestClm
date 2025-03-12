@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted } from "vue";
-import teamsStore from "../../store/teamsStore"; // Import du store
+import teamsStore from "../../store/teamsStore"; // Import du ou des stores
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);

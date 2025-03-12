@@ -1,4 +1,3 @@
-<!-- AdminSidebar.vue -->
 <template>
   <div class="sidebar" :class="{ collapsed: isCollapsed }">
     <div class="sidebar-header">
