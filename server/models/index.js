@@ -52,8 +52,12 @@ const syncDatabase = async () => {
     await sequelize.sync({ force: false });
     console.log("🔄 Base de données synchronisée");
 
-    // Créer les données démo
-    if (process.env.NODE_ENV === "development") await createDemoData();
+    // Créer les données démo => jeux complet de donnée si NODE_ENV de démo/dev seulement admin principal sinon
+    if (process.env.NODE_ENV === "development") {
+      await createDemoData();
+    } else {
+      await createDefaultAdmin();
+    }
   } catch (error) {
     console.error("❌ Erreur de synchronisation:", error);
   }

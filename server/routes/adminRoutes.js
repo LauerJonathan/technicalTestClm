@@ -64,10 +64,7 @@ router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Vérifier si l'admin existe
     const admin = await Admin.findOne({ where: { email } });
-
-    // Message d'erreur générique
     if (!admin) {
       return res.status(401).json({
         success: false,

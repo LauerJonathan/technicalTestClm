@@ -4,7 +4,6 @@ const { Op } = require("sequelize");
 
 const getUpcomingFiveMatches = async (req, res) => {
   try {
-    // Date actuelle
     const today = new Date();
 
     const upcomingMatches = await Match.findAll({

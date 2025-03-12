@@ -384,8 +384,7 @@
                 <strong>J</strong>: Joués, <strong>V</strong>: Victoires,
                 <strong>N</strong>: Nuls, <strong>D</strong>: Défaites,
                 <strong>BP</strong>: Buts Pour, <strong>BC</strong>: Buts
-                Contre, <strong></strong>: Différence, <strong>Pts</strong>:
-                Points
+                Contre, <strong>Pts</strong>: Points
               </p>
             </div>
           </div>
@@ -435,19 +434,16 @@ export default {
     filteredMatches() {
       let result = [...this.matches];
 
-      // Filtrer par tournoi
       if (this.selectedTournament) {
         result = result.filter(
           (match) => match.tournamentId === parseInt(this.selectedTournament)
         );
       }
 
-      // Filtrer par statut
       if (this.statusFilter) {
         result = result.filter((match) => match.status === this.statusFilter);
       }
 
-      // Filtrer par recherche
       if (this.searchQuery) {
         const query = this.searchQuery.toLowerCase();
         result = result.filter((match) => {
@@ -473,57 +469,34 @@ export default {
     },
   },
   methods: {
-    // Méthodes d'API
     async getAllMatches() {
       this.isLoading = true;
       this.error = null;
 
       try {
-        // Chargement des tournois
         const tournamentsData = await tournamentStore.fetchAllTournaments();
         this.tournaments = Array.isArray(tournamentsData)
           ? tournamentsData
           : tournamentsData.data || [];
-        // Chargement des équipes
+
         const teams = await teamsStore.fetchAllTeams();
         this.teams = Array.isArray(teams) ? teams : teams.data || [];
-        // Chargement des matchs
-        const allMatches = await matchesStore.fetchAllMatches();
-        const upcomingMatches = await matchesStore.fetchUpcomingMatches();
-        const previousMatches = await matchesStore.fetchPrevious();
-        // Extraire les données selon le format de l'API
-        const extractData = (data) => {
-          if (!data) return [];
-          return Array.isArray(data) ? data : data.data || [];
-        };
-        // Fusionner tous les matchs
-        this.matches = [
-          ...extractData(allMatches),
-          ...extractData(upcomingMatches),
-          ...extractData(previousMatches),
-        ];
-        // Éliminer les doublons
-        this.matches = this.matches.filter(
-          (match, index, self) =>
-            index === self.findIndex((m) => m.id === match.id)
-        );
-        // Transformer les données des matchs
-        this.matches = this.matches.map((match) => ({
-          ...match,
-          // S'assurer que les propriétés essentielles existent
-          homeScore: match.homeScore || 0,
-          awayScore: match.awayScore || 0,
-          status: match.status || "scheduled",
-        }));
-        // Si un tournoi est sélectionné, charger ses données
+
         if (this.selectedTournament) {
           await this.loadTournamentData();
-        }
+        } else {
+          const allMatches = await matchesStore.fetchAllMatches();
+          this.matches = Array.isArray(allMatches)
+            ? allMatches
+            : allMatches.data || [];
 
-        // Vérifier la vue mobile après chargement des données
-        this.$nextTick(() => {
-          this.checkMobileView();
-        });
+          this.matches = this.matches.map((match) => ({
+            ...match,
+            homeScore: match.homeScore || 0,
+            awayScore: match.awayScore || 0,
+            status: match.status || "scheduled",
+          }));
+        }
       } catch (error) {
         console.error("Erreur lors du chargement des données:", error);
         this.error =
@@ -532,56 +505,99 @@ export default {
             : "Erreur lors du chargement des données";
       } finally {
         this.isLoading = false;
+
+        this.$nextTick(() => {
+          this.checkMobileView();
+        });
       }
     },
+
     async loadTournamentData() {
+      this.isLoading = true;
+      this.error = null;
+
       if (!this.selectedTournament) {
         this.standings = [];
+        try {
+          const allMatches = await matchesStore.fetchAllMatches();
+          this.matches = Array.isArray(allMatches)
+            ? allMatches
+            : allMatches.data || [];
+
+          this.matches = this.matches.map((match) => ({
+            ...match,
+            homeScore: match.homeScore || 0,
+            awayScore: match.awayScore || 0,
+            status: match.status || "scheduled",
+          }));
+        } catch (error) {
+          console.error("Erreur lors du chargement des matchs:", error);
+          this.error =
+            typeof error === "string"
+              ? error
+              : "Erreur lors du chargement des matchs";
+        }
+        this.isLoading = false;
         return;
       }
-      this.isLoading = true;
+
       try {
-        // Récupérer les standings depuis l'API
+        const tournamentMatches = await tournamentStore.fetchTournamentMatches(
+          this.selectedTournament
+        );
+        this.matches = Array.isArray(tournamentMatches)
+          ? tournamentMatches
+          : tournamentMatches.data || [];
+
+        this.matches = this.matches.map((match) => ({
+          ...match,
+          homeScore: match.homeScore || 0,
+          awayScore: match.awayScore || 0,
+          status: match.status || "scheduled",
+        }));
+
         const standingsData = await tournamentStore.fetchTournamentStandings(
           this.selectedTournament
         );
         if (standingsData && standingsData.length > 0) {
-          // Si l'API renvoie des standings, les utiliser
           this.standings = standingsData;
-          console.log("Classements récupérés depuis l'API:", this.standings);
         } else {
-          // Sinon, calculer les standings localement
           this.calculateStandings();
-          console.log("Classements calculés localement:", this.standings);
         }
+      } catch (error) {
+        console.error(
+          "Erreur lors du chargement des données du tournoi:",
+          error
+        );
+        this.error =
+          typeof error === "string"
+            ? error
+            : "Erreur lors du chargement des données du tournoi";
 
-        // Vérifier la vue mobile après chargement des données
+        if (this.matches.length > 0) {
+          this.calculateStandings();
+        }
+      } finally {
+        this.isLoading = false;
+
         this.$nextTick(() => {
           this.checkMobileView();
         });
-      } catch (error) {
-        console.error("Erreur lors du chargement des classements:", error);
-        // Si l'API échoue, calculer les standings localement
-        this.calculateStandings();
-      } finally {
-        this.isLoading = false;
       }
     },
+
     async saveScore(matchId) {
-      // Vérifier si l'utilisateur est authentifié
       if (!this.isUserAuthenticated) {
         this.error = "Vous devez être connecté pour sauvegarder les scores";
         return;
       }
       try {
         this.isLoading = true;
-        // Mettre à jour le score via l'API de matchesStore
         const updatedMatch = await matchesStore.updateMatchResult(
           matchId,
           parseInt(this.editScore.homeScore),
           parseInt(this.editScore.awayScore)
         );
-        // Mettre à jour le match dans tableau local
         const matchIndex = this.matches.findIndex((m) => m.id === matchId);
         if (matchIndex !== -1) {
           this.matches[matchIndex] = {
@@ -592,11 +608,9 @@ export default {
             playedDate: new Date().toISOString(),
           };
         }
-        // Réinitialiser l'état d'édition
         this.isEditing = false;
         this.editingMatchId = null;
-        console.log("Score sauvegardé:", updatedMatch);
-        // actualiser le classement après la mise à jour du score
+
         if (this.activeTab === "standings" && this.selectedTournament) {
           await this.loadTournamentData();
         }
@@ -610,41 +624,44 @@ export default {
         this.isLoading = false;
       }
     },
-    // Méthodes de formatage et d'affichage
+
     getTeamName(teamId) {
       if (!teamId) return "Équipe inconnue";
       const team = this.teams.find((t) => t.id === teamId);
       return team ? team.name : `Équipe ${teamId}`;
     },
+
     getTeamPlayers(teamId) {
       if (!teamId) return "";
       const team = this.teams.find((t) => t.id === teamId);
       if (!team) return "";
       return `${team.player1Name || ""} & ${team.player2Name || ""}`;
     },
+
     getTournamentName(tournamentId) {
       if (!tournamentId) return "";
       const tournament = this.tournaments.find((t) => t.id === tournamentId);
       return tournament ? tournament.name : `Tournoi ${tournamentId}`;
     },
+
     calculateStandings() {
       if (!this.selectedTournament) {
         this.standings = [];
         return;
       }
-      // Filtrer les matchs du tournoi sélectionné
+
       const tournamentMatches = this.matches.filter(
         (match) =>
           match.tournamentId === parseInt(this.selectedTournament) &&
           match.status === "completed"
       );
-      // Identifier toutes les équipes qui ont participé
+
       const teamIds = new Set();
       tournamentMatches.forEach((match) => {
         if (match.homeTeamId) teamIds.add(match.homeTeamId);
         if (match.awayTeamId) teamIds.add(match.awayTeamId);
       });
-      // Initialiser les statistiques pour chaque équipe
+
       const teamsStats = {};
       Array.from(teamIds).forEach((teamId) => {
         const team = this.teams.find((t) => t.id === teamId);
@@ -665,61 +682,56 @@ export default {
           points: 0,
         };
       });
-      // Calculer les statistiques pour chaque équipe
+
       tournamentMatches.forEach((match) => {
         const homeTeamId = match.homeTeamId;
         const awayTeamId = match.awayTeamId;
         const homeScore = match.homeScore;
         const awayScore = match.awayScore;
-        // Vérifier que les équipes existent dans teamsStats
+
         if (!teamsStats[homeTeamId] || !teamsStats[awayTeamId]) {
           return;
         }
-        // Matches joués
+
         teamsStats[homeTeamId].matchesPlayed++;
         teamsStats[awayTeamId].matchesPlayed++;
-        // Buts marqués et encaissés
+
         teamsStats[homeTeamId].goalsFor += homeScore;
         teamsStats[homeTeamId].goalsAgainst += awayScore;
         teamsStats[awayTeamId].goalsFor += awayScore;
         teamsStats[awayTeamId].goalsAgainst += homeScore;
-        // Résultat du match
+
         if (homeScore > awayScore) {
-          // Victoire de l'équipe à domicile
           teamsStats[homeTeamId].matchesWon++;
           teamsStats[homeTeamId].points += 3;
           teamsStats[awayTeamId].matchesLost++;
         } else if (homeScore < awayScore) {
-          // Victoire de l'équipe à l'extérieur
           teamsStats[awayTeamId].matchesWon++;
           teamsStats[awayTeamId].points += 3;
           teamsStats[homeTeamId].matchesLost++;
         } else {
-          // Match nul
           teamsStats[homeTeamId].matchesDraw++;
           teamsStats[awayTeamId].matchesDraw++;
           teamsStats[homeTeamId].points += 1;
           teamsStats[awayTeamId].points += 1;
         }
       });
-      // Calculer la différence de buts
+
       Object.values(teamsStats).forEach((team) => {
         team.goalDifference = team.goalsFor - team.goalsAgainst;
       });
-      // Convertir en tableau et trier
+
       const sortedStandings = Object.values(teamsStats).sort((a, b) => {
-        // D'abord par points
         if (a.points !== b.points) return b.points - a.points;
-        // Puis par différence de buts
         if (a.goalDifference !== b.goalDifference)
           return b.goalDifference - a.goalDifference;
-        // Puis par buts marqués
         if (a.goalsFor !== b.goalsFor) return b.goalsFor - a.goalsFor;
-        // Enfin par ordre alphabétique
         return a.Team.name.localeCompare(b.Team.name);
       });
+
       this.standings = sortedStandings;
     },
+
     formatDate(dateString) {
       if (!dateString) return "Non programmé";
       const date = new Date(dateString);
@@ -729,6 +741,7 @@ export default {
         year: "numeric",
       });
     },
+
     formatDateTime(dateString) {
       if (!dateString) return "Non programmé";
       const date = new Date(dateString);
@@ -741,6 +754,7 @@ export default {
         minute: "2-digit",
       })}`;
     },
+
     formatStatus(status) {
       const statusMap = {
         completed: "Terminé",
@@ -750,22 +764,24 @@ export default {
       };
       return statusMap[status] || status;
     },
+
     formatTeamPlayers(players) {
       if (!players) return "";
-      // Si les joueurs sont déjà formatés, les retourner tels quels
       if (players.includes("&")) return players;
-      // Formater les noms
+
       const formatName = (fullName) => {
         if (!fullName) return "";
         const parts = fullName.trim().split(" ");
         if (parts.length === 1) return parts[0];
         return `${parts[0]}.${parts[1].charAt(0)}`;
       };
+
       const playerNames = players
         .split(",")
         .map((name) => formatName(name.trim()));
       return playerNames.join(" & ");
     },
+
     startEditing(match) {
       this.isEditing = true;
       this.editingMatchId = match.id;
@@ -774,6 +790,7 @@ export default {
         awayScore: match.awayScore || 0,
       };
     },
+
     viewMatchDetails(matchId) {
       const match = this.matches.find((m) => m.id === matchId);
       if (match) {
@@ -796,10 +813,8 @@ export default {
     },
 
     checkMobileView() {
-      // Déterminer si nous sommes sur mobile en fonction de la largeur de la fenêtre
       this.isMobileView = window.innerWidth <= 768;
 
-      // Appliquer des classes CSS pour afficher/masquer les vues appropriées
       this.$nextTick(() => {
         const tableContainer = document.querySelector(
           ".matches-table-container"
@@ -830,18 +845,14 @@ export default {
       });
     },
   },
+
   mounted() {
-    // Charger les données au montage du composant
     this.getAllMatches();
-
-    // Initialiser la détection de la vue mobile
     this.checkMobileView();
-
-    // Ajouter un écouteur pour les changements de taille d'écran
     window.addEventListener("resize", this.checkMobileView);
   },
+
   beforeUnmount() {
-    // Nettoyer l'écouteur lors de la destruction du composant
     window.removeEventListener("resize", this.checkMobileView);
   },
 };

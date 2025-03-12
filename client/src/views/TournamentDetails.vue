@@ -40,9 +40,11 @@
           </button>
           <button
             v-if="
-              tournament.status === 'open' &&
-              tournament.Teams &&
-              tournament.Teams.length >= 2
+              (tournament.status === 'open' &&
+                tournament.Teams &&
+                tournament.Teams.length >= 2 &&
+                !matches) ||
+              matches.length === 0
             "
             class="action-btn generate"
             @click="showGenerateMatchesConfirm = true">
@@ -65,12 +67,6 @@
         :class="{ active: activeTab === 'matches' }"
         @click="activeTab = 'matches'">
         Matchs
-      </button>
-      <button
-        class="tab-btn"
-        :class="{ active: activeTab === 'standings' }"
-        @click="activeTab = 'standings'">
-        Classement
       </button>
     </div>
 
@@ -167,56 +163,6 @@
             </button>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- Contenu de l'onglet classement -->
-    <div v-if="activeTab === 'standings'" class="tab-content">
-      <div v-if="loading" class="loading">Chargement du classement...</div>
-      <div
-        v-else-if="!tournamentTeams || tournamentTeams.length === 0"
-        class="empty-state">
-        <p>Aucune donnée de classement disponible.</p>
-      </div>
-      <div v-else class="standings-table">
-        <table>
-          <thead>
-            <tr>
-              <th>Pos.</th>
-              <th class="team-col">Équipe</th>
-              <th>J</th>
-              <th>G</th>
-              <th>N</th>
-              <th>P</th>
-              <th>BP</th>
-              <th>BC</th>
-              <th>Diff</th>
-              <th>Pts</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="(teamStats, index) in sortedStandings"
-              :key="teamStats.id">
-              <td class="position">{{ index + 1 }}</td>
-              <td class="team-col">{{ getTeamName(teamStats.teamId) }}</td>
-              <td>{{ teamStats.matchesPlayed }}</td>
-              <td>{{ teamStats.matchesWon }}</td>
-              <td>{{ teamStats.matchesDraw }}</td>
-              <td>{{ teamStats.matchesLost }}</td>
-              <td>{{ teamStats.goalsFor }}</td>
-              <td>{{ teamStats.goalsAgainst }}</td>
-              <td
-                :class="{
-                  positive: teamStats.goalsFor - teamStats.goalsAgainst > 0,
-                  negative: teamStats.goalsFor - teamStats.goalsAgainst < 0,
-                }">
-                {{ teamStats.goalsFor - teamStats.goalsAgainst }}
-              </td>
-              <td class="points">{{ teamStats.points }}</td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     </div>
 
@@ -967,53 +913,6 @@ h1 {
 .match-actions {
   display: flex;
   justify-content: flex-end;
-}
-
-/* Classement */
-.standings-table {
-  overflow-x: auto;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  color: white;
-}
-
-th,
-td {
-  padding: 10px;
-  text-align: center;
-  border-bottom: 1px solid #333;
-}
-
-th {
-  font-weight: bold;
-  color: #aaa;
-  font-size: 0.9rem;
-}
-
-.team-col {
-  text-align: left;
-  min-width: 150px;
-}
-
-.position {
-  font-weight: bold;
-  color: #ef854d;
-}
-
-.points {
-  font-weight: bold;
-  color: #ef854d;
-}
-
-.positive {
-  color: #4caf50;
-}
-
-.negative {
-  color: #f44336;
 }
 
 /* États vides */

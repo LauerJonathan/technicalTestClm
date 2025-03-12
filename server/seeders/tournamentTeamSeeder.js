@@ -23,7 +23,7 @@ const createDemoTournamentTeams = async () => {
 
       // Pour chaque tournoi, inscrire plusieurs équipes avec des statistiques
       tournaments.forEach((tournament) => {
-        // Nombre d'équipes à inscrire pour ce tournoi (entre 4 et 8)
+        // Nombre d'équipes à inscrire pour ce tournoi (entre 6 et 8)
         const numTeams =
           tournament.status === "draft"
             ? 0
@@ -31,7 +31,7 @@ const createDemoTournamentTeams = async () => {
             ? 6
             : 8;
 
-        // Mélanger les équipes et en prendre un certain nombre
+        // Mélanger les équipes et en prendre une partie
         const shuffledTeams = [...teams]
           .sort(() => 0.5 - Math.random())
           .slice(0, numTeams);
