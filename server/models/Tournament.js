@@ -23,7 +23,7 @@ const Tournament = sequelize.define(
     },
     status: {
       type: DataTypes.ENUM("draft", "open", "in_progress", "completed"),
-      defaultValue: "draft",
+      defaultValue: "open",
     },
     createdById: {
       type: DataTypes.INTEGER,

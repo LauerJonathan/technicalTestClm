@@ -215,7 +215,7 @@ export default {
         name: "",
         date: "",
         description: "",
-        status: "draft",
+        status: "open",
       },
       errors: {
         name: "",
