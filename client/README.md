@@ -15,7 +15,7 @@ Avant de commencer, assurez-vous d'avoir installé :
 1. **Cloner le projet si ce n'est pas déjà fait**
 
 ```bash
-git clone https://github.com/LauerJonathan/technicalTest
+git clone https://github.com/LauerJonathan/technicalTestClm
 ```
 
 2. Installer les dépendances

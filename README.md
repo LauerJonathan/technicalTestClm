@@ -3,10 +3,11 @@
 Ce projet est une API dédiée à la gestion des équipes de babyfoot, des tournois et des matchs.
 
 ## Prérequis : Installation de Docker et Docker Compose
+
 Avant de pouvoir utiliser l'application avec Docker, veuillez vous assurer que Docker et Docker Compose sont installés sur votre machine.
 
 1. Installer Docker
-Pour installer Docker, veuillez suivre les instructions selon votre système d'exploitation :
+   Pour installer Docker, veuillez suivre les instructions selon votre système d'exploitation :
 
 Sur Windows : Télécharger Docker Desktop pour Windows
 Sur macOS : Télécharger Docker Desktop pour macOS
@@ -20,7 +21,7 @@ docker --version
 Cela devrait vous retourner la version de Docker installée.
 
 2. Installer Docker Compose
-Docker Compose est un outil utilisé pour définir et exécuter des applications multi-conteneurs Docker. Si vous utilisez Docker Desktop, Docker Compose est déjà inclus. Sinon, voici comment l'installer manuellement :
+   Docker Compose est un outil utilisé pour définir et exécuter des applications multi-conteneurs Docker. Si vous utilisez Docker Desktop, Docker Compose est déjà inclus. Sinon, voici comment l'installer manuellement :
 
 Sur Windows/macOS : Docker Compose est inclus avec Docker Desktop.
 Sur Linux : Vous pouvez installer Docker Compose en suivant ces instructions :
@@ -43,7 +44,7 @@ Cela vous permettra de vérifier si Docker Compose est installé correctement.
 Clonez le projet :
 
 ```bash
-git clone https://github.com/LauerJonathan/technicalTest
+git clone https://github.com/LauerJonathan/technicalTestClm
 ```
 
 Démarrez l'application avec Docker : Exécutez cette commande pour démarrer les services.
@@ -86,19 +87,23 @@ Les seeders sont exécutés automatiquement au démarrage de l'application lorsq
 ### Structure des Données de Démonstration
 
 #### Équipes (8)
+
 - Noms d'équipes créatifs avec deux joueurs par équipe
 - Exemples : "Les Invincibles", "Rocket Power", "Goal Diggers", etc.
 
 #### Tournois (5)
+
 - Différents statuts pour simuler un flux réel : brouillon, ouvert, en cours, terminé
 - Dates échelonnées (passé, présent, futur)
 - Descriptions personnalisées
 
 #### Inscriptions aux Tournois
+
 - Chaque tournoi contient entre 4 et 8 équipes
 - Les statistiques (points, matchs joués, buts) sont générées automatiquement selon l'état du tournoi
 
 #### Matches
+
 - Générés entre équipes inscrites aux mêmes tournois
 - Résultats remplis pour les tournois terminés ou en cours
 - Dates programmées cohérentes avec les dates des tournois

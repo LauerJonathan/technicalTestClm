@@ -14,7 +14,7 @@ Avant de commencer, assurez-vous d'avoir installé :
 1. **Cloner le projet si ce n'est pas déjà fait**
 
 ```bash
-git clone https://github.com/LauerJonathan/technicalTest
+git clone https://github.com/LauerJonathan/technicalTestClm
 ```
 
 2. **Installer les dépendances**
@@ -29,12 +29,11 @@ npm install
 Utilisation d'un fichier .env :
 
 ```bash
-CopyDB_HOST=localhost
+DB_HOST=localhost
 DB_USER=votre_utilisateur
 DB_PASSWORD=votre_mot_de_passe
 DB_NAME=babyfoot_db
 DB_PORT=3306
-
 PORT=8080
 JWT_SECRET=votre_secret_jwt
 NODE_ENV=development
