@@ -1,3 +1,5 @@
+const dotenv = require("dotenv");
+
 const { sequelize } = require("../config/database");
 const Admin = require("./Admin");
 const Tournament = require("./Tournament");
@@ -6,6 +8,9 @@ const TournamentTeam = require("./TournamentTeam");
 const Match = require("./Match");
 const { createDefaultAdmin } = require("../seeders/adminSeeder");
 const { createDemoData } = require("../seeders/demoSeeder");
+
+// Charger les variables d'environnement
+dotenv.config();
 
 // Définition des associations
 // Admin - Tournament
@@ -48,7 +53,7 @@ const syncDatabase = async () => {
     console.log("🔄 Base de données synchronisée");
 
     // Créer les données démo
-    await createDemoData();
+    if (process.env.NODE_ENV === "development") await createDemoData();
   } catch (error) {
     console.error("❌ Erreur de synchronisation:", error);
   }

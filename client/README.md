@@ -1,5 +1,38 @@
-# Vue 3 + Vite
+# Babyfoot API - Installation Frontend
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Ce document explique comment installer et démarrer le frontend de l'API Babyfoot sans utiliser Docker, en passant directement par npm.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## Prérequis
+
+Avant de commencer, assurez-vous d'avoir installé :
+
+- [Node.js](https://nodejs.org/) (version 14.x ou supérieure recommandée)
+- [npm](https://www.npmjs.com/) (généralement installé avec Node.js)
+- Avoir installer le backend (dossier server à la racine du projet)
+
+## Installation du Frontend
+
+1. **Cloner le projet si ce n'est pas déjà fait**
+
+```bash
+git clone https://github.com/LauerJonathan/technicalTest
+```
+
+2. Installer les dépendances
+
+```bash
+cd technicalTest/frontend
+npm install
+```
+
+## Démarrez le front-end
+
+```bash
+npm run dev
+```
+
+Une fois l'application démarrée, elle sera accessible :
+
+```bash
+http;//localhost:8080
+```
