@@ -214,7 +214,7 @@ const getTeamName = (teamId) => teamsStore.getTeamName(teamId);
       font-weight="bold"
       fill="#ef854d"
       text-anchor="middle">
-      {{ getTeamName(match.homeTeamId) }} {{ winner === "home" ? "🚀" : "" }}
+      {{ getTeamName(match.homeTeamId) }}
     </text>
     <text
       x="580"
@@ -224,7 +224,7 @@ const getTeamName = (teamId) => teamsStore.getTeamName(teamId);
       font-weight="bold"
       fill="#2196f3"
       text-anchor="middle">
-      {{ getTeamName(match.awayTeamId) }} {{ winner === "away" ? "🚀" : "" }}
+      {{ getTeamName(match.awayTeamId) }}
     </text>
 
     <!-- Score ou date du match -->
